@@ -6,10 +6,10 @@ function binarySearch(target,array){
         return `${target} is in the array`
     }
 
-    if (target > mid){
-        return binarySearch(target,array.slice(0,mid))
-    } else if (target < mid){
-        return binarySearch(target, array.slice(mid + 1, array.length))
+    if (mid < target){
+        return binarySearch(target,array.slice(position + 1, array.length))
+    } else if (mid > target){
+        return binarySearch(target, array.slice(0, position))
     } else {
         return `${target} is not in the array`
     }
