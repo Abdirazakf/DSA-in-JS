@@ -1,4 +1,8 @@
-function binarySearch(target,array){
+export default function binarySearch(target,array){
+    if (array.length == 0){
+        return `${target} is not in the array`
+    }
+
     let position = Math.floor(array.length / 2)
     let mid = array[position]
 
