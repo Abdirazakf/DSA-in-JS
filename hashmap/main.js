@@ -26,7 +26,7 @@ class LinkedList {
     }
 }
 
-class HashMap {
+export default class HashMap {
     constructor() {
         this.capacity = 16
         this.loadFactor = 0.8
@@ -77,7 +77,6 @@ class HashMap {
     }
 
     rehash() {
-        console.log('Rehashing')
         const oldArray = this.array
         this.capacity *= 2
         this.array = new Array(this.capacity)
@@ -111,6 +110,11 @@ class HashMap {
 
     get(key) {
         let hashCode = this.hash(key)
+
+        if (!this.array[hashCode]) {
+            return null
+        }
+
         let current = this.array[hashCode].head
 
         while (current){
@@ -125,6 +129,11 @@ class HashMap {
 
     has(key) {
         let hashCode = this.hash(key)
+
+        if (!this.array[hashCode]) {
+            return false
+        }
+
         let current = this.array[hashCode].head
 
         while (current){
@@ -247,19 +256,3 @@ class HashMap {
         return list
     }
 }
-
-const test = new HashMap
-test.set('apple', 'red')
-test.set('banana', 'yellow')
-test.set('carrot', 'orange')
-test.set('dog', 'brown')
-test.set('elephant', 'gray')
-test.set('frog', 'green')
-test.set('grape', 'purple')
-test.set('hat', 'black')
-test.set('ice cream', 'white')
-test.set('jacket', 'blue')
-test.set('kite', 'pink')
-test.set('lion', 'golden')
-test.set('moon', 'silver')
-console.log(test)
