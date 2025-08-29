@@ -234,11 +234,30 @@ class Tree {
 
         traverse(this.root)
     }
+
+    height(value) {
+        const target = this.find(value)
+
+        if (!target) {
+            return null
+        }
+
+        function getHeight(node) {
+            if (!node) {
+                return -1
+            }
+
+            return 1 + Math.max(getHeight(node.left),getHeight(node.right))
+        }
+
+        return getHeight(target)
+    }
 }
 
 let tree = new Tree
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree.buildTree(array)
-console.log(tree.find(67))
+console.log(tree.find(3))
 tree.prettyPrint()
-tree.inOrderForEach(node => console.log(node.data))
+// tree.inOrderForEach(node => console.log(node.data))
+console.log(tree.height(8))
