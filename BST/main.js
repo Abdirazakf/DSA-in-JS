@@ -234,6 +234,14 @@ class Tree {
 
         traverse(this.root)
     }
+    
+    getHeight(node) {
+        if (!node) {
+            return -1
+        }
+        
+        return 1 + Math.max(this.getHeight(node.left),this.getHeight(node.right))
+    }
 
     height(value) {
         const target = this.find(value)
@@ -242,15 +250,7 @@ class Tree {
             return null
         }
 
-        function getHeight(node) {
-            if (!node) {
-                return -1
-            }
-
-            return 1 + Math.max(getHeight(node.left),getHeight(node.right))
-        }
-
-        return getHeight(target)
+        return this.getHeight(target)
     }
 
     depth(value, node = this.root, current = 0) {
@@ -270,6 +270,21 @@ class Tree {
 
         return current
     }
+
+    isBalanced(node = this.root) {
+        if (!node) {
+            return true
+        }
+
+        const leftHeight = this.getHeight(node.left)
+        const rightHeight = this.getHeight(node.right)
+
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return false
+        }
+
+        return this.isBalanced(node.left) && this.isBalanced(node.right)
+    }
 }
 
 let tree = new Tree
@@ -280,3 +295,10 @@ tree.prettyPrint()
 // tree.inOrderForEach(node => console.log(node.data))
 console.log(tree.height(8))
 console.log(tree.depth(9))
+console.log(tree.isBalanced())
+tree.deleteItem(4)
+tree.deleteItem(3)
+tree.deleteItem(1)
+tree.deleteItem(7)
+tree.prettyPrint()
+console.log(tree.isBalanced())
