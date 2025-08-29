@@ -252,6 +252,24 @@ class Tree {
 
         return getHeight(target)
     }
+
+    depth(value, node = this.root, current = 0) {
+        if (!node) {
+            return -1
+        }
+
+        if (node.data === value) {
+            return current
+        }
+
+        if (value < node.data) {
+            return this.depth(value,node.left,current + 1)
+        } else if (value > node.data) {
+            return this.depth(value,node.right,current + 1)
+        }
+
+        return current
+    }
 }
 
 let tree = new Tree
@@ -261,3 +279,4 @@ console.log(tree.find(3))
 tree.prettyPrint()
 // tree.inOrderForEach(node => console.log(node.data))
 console.log(tree.height(8))
+console.log(tree.depth(9))
