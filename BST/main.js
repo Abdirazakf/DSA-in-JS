@@ -147,6 +147,27 @@ class Tree {
         }
     }
 
+    levelOrderForEach(callback) {
+        if (typeof callback !== 'function') {
+            throw new Error('Callback function is required')
+        }
+
+        const queue = [this.root]
+
+        while (queue.length > 0) {
+            const node = queue.shift()
+            callback(node)
+
+            if (node.left) {
+                queue.push(node.left)
+            }
+
+            if (node.right) {
+                queue.push(node.right)
+            }
+        }
+    }
+
     prettyPrint(node = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;
@@ -201,6 +222,6 @@ let tree = new Tree
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree.buildTree(array)
 console.log('Inorder:', tree.inorder())
-tree.deleteItem(8)
 console.log(tree.find(67))
 tree.prettyPrint()
+tree.levelOrderForEach(node => console.log(node.data))
