@@ -375,9 +375,6 @@ function driverScript() {
     
     // 7. Confirm tree is balanced
     console.log("\n7. Is tree balanced?", tree.isBalanced())
-    
-    console.log("\n=== Driver Script Complete ===")
 }
 
-// Run the driver script
 driverScript()
