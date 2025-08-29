@@ -98,6 +98,39 @@ class Tree {
         return node
     }
 
+    deleteItem(value, node = this.root) {
+        function getSuccessor(curr) {
+            curr = curr.right
+            while (curr && curr.left) {
+                curr = curr.left
+            }
+            return curr
+        }
+
+        if (!node) {
+            return node
+        }
+
+        if (value < node.data) {
+            node.left = this.deleteItem(value,node.left)
+        } else if (value > node.data) {
+            node.right = this.deleteItem(value,node.right)
+        } else {
+            if (!node.left) {
+                return node.right
+            }
+
+            if (!node.right) {
+                return node.left
+            }
+
+            let successor = getSuccessor(node)
+            node.data = successor.data
+            node.right = this.deleteItem(successor.data, node.right)
+        }
+        return node
+    }
+
     prettyPrint(node = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;
@@ -151,8 +184,6 @@ class Tree {
 let tree = new Tree
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree.buildTree(array)
-console.log(tree)
-console.log("Preorder:", tree.preorder())
 console.log('Inorder:', tree.inorder())
-console.log('Postorder:', tree.postorder())
+tree.deleteItem(8)
 tree.prettyPrint()
