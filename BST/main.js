@@ -181,47 +181,64 @@ class Tree {
         }
     }
     
-    preorder(node = this.root,array = []){
-        if (!node) {
-            return array
+    preOrderForEach(callback){
+        if (typeof callback !== 'function') {
+            throw Error('Callback function is required')
         }
         
-        array.push(node.data)
-        this.preorder(node.left, array)
-        this.preorder(node.right, array)
+        function traverse(node) {
+            if (!node) {
+                return
+            }
+
+            callback(node)
+            traverse(node.left)
+            traverse(node.right)
+        }
+
+        traverse(this.root)
+    }
+
+    inOrderForEach(callback){
+        if (typeof callback !== 'function') {
+            throw Error('Callback function is required')
+        }
         
-        return array
-    }
+        function traverse(node) {
+            if (!node) {
+                return
+            }
 
-    inorder(node = this.root, array = []) {
-        if (!node) {
-            return array
+            traverse(node.left)
+            callback(node)
+            traverse(node.right)
         }
 
-        this.inorder(node.left,array)
-        array.push(node.data)
-        this.inorder(node.right,array)
-
-        return array
+        traverse(this.root)
     }
 
-    postorder(node = this.root, array = []) {
-        if (!node) {
-            return array
+    postOrderForEach(callback){
+        if (typeof callback !== 'function') {
+            throw Error('Callback function is required')
+        }
+        
+        function traverse(node) {
+            if (!node) {
+                return
+            }
+
+            traverse(node.left)
+            traverse(node.right)
+            callback(node)
         }
 
-        this.postorder(node.left,array)
-        this.postorder(node.right,array)
-        array.push(node.data)
-
-        return array
+        traverse(this.root)
     }
 }
 
 let tree = new Tree
 const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree.buildTree(array)
-console.log('Inorder:', tree.inorder())
 console.log(tree.find(67))
 tree.prettyPrint()
-tree.levelOrderForEach(node => console.log(node.data))
+tree.inOrderForEach(node => console.log(node.data))
