@@ -131,6 +131,22 @@ class Tree {
         return node
     }
 
+    find(value, node = this.root) {
+        if (!node) {
+            return null
+        }
+
+        if (value === node.data) {
+            return node
+        }
+
+        if (value < node.data) {
+            return this.find(value,node.left)
+        } else if (value > node.data) {
+            return this.find(value,node.right)
+        }
+    }
+
     prettyPrint(node = this.root, prefix = '', isLeft = true) {
         if (node === null) {
             return;
@@ -186,4 +202,5 @@ const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree.buildTree(array)
 console.log('Inorder:', tree.inorder())
 tree.deleteItem(8)
+console.log(tree.find(67))
 tree.prettyPrint()
